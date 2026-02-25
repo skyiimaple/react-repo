@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "react-jsx",
+    "declaration": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "paths": {
+      "@monorepo/components": ["packages/components/src"],
+      "@monorepo/utils": ["packages/utils/src"],
+      "@monorepo/hooks": ["packages/hooks/src"]
+    }
+  },
+  "exclude": ["node_modules", "dist", "**/__tests__/**", "**/test/**"]
+}
