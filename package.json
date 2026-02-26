@@ -7,7 +7,8 @@
     "build": "lerna run build",
     "test": "jest",
     "lint": "eslint \"packages/**/*.{ts,tsx}\"",
-    "format": "prettier --write \"packages/**/*.{ts,tsx,json,md}\""
+    "format": "prettier --write \"packages/**/*.{ts,tsx,json,md}\"",
+    "example": "pnpm --filter example dev"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",
