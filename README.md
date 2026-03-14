@@ -1,56 +1,70 @@
-# React Repo Monorepo
+# shrimp-design-react
 
-这是一个基于 Lerna + pnpm Monorepo 架构的 React 19 + TypeScript 项目，用于对 Ant Design 进行二次封装开发。
+个人学习网站，个人使用。记录学习过程
 
-## 项目结构
+## 📚 文档
 
-```text
-.
-├── packages
-│   ├── components  # 组件库
-│   ├── utils       # 工具函数库
-│   └── hooks       # 自定义 Hooks 库
-├── jest.config.js  # Jest 配置
-├── lerna.json      # Lerna 配置
-└── pnpm-workspace.yaml # pnpm workspace 配置
-```
+详细的组件文档请查看 [docs/README.md](./docs/README.md)
 
-## 快速开始
+### 组件列表
+
+- [Image 图片组件](./docs/components/image.md) - 支持预览和错误处理的图片组件
+- [Layout 布局组件](./docs/components/layout.md) - 灵活的布局组件，支持多种布局模式
+- [SearchForm 搜索表单组件](./docs/components/search-form.md) - 功能强大的搜索表单组件
+
+## 🚀 快速开始
 
 ### 安装依赖
 
 ```bash
 pnpm install
+# 安装一个新的包 示例styles 包
+pnpm add "@shrimp-design-react/styles@workspace:*" -w
+# 安装一个新的包 到指定目录
+pnpm add react --filter "{项目名字}"
 ```
 
-### 运行单元测试
+### 使用组件
 
-```bash
-pnpm test
+```tsx
+import { Image, Layout, SearchForm } from '@shrimp-design-react/components'
+
+function App() {
+  return (
+    <Layout mode="HB" header={<div>头部</div>}>
+      <SearchForm
+        fields={{
+          name: {
+            type: 'input',
+            label: '姓名',
+            placeholder: '请输入姓名'
+          }
+        }}
+        onSearch={(values) => console.log(values)}
+      />
+      <Image src="https://example.com/image.jpg" preview />
+    </Layout>
+  )
+}
 ```
 
-### 构建所有包
+## 📦 组件包
 
-```bash
-pnpm build
-```
+### @shrimp-design-react/components
 
-## 如何添加新组件
+包含以下组件：
 
-1. 在 `packages/components/src` 目录下创建新组件文件夹（例如 `MyComponent`）。
-2. 编写组件代码、样式及类型定义。
-3. 在 `packages/components/src/index.ts` 中导出新组件。
-4. 在组件目录下添加 `__tests__` 进行测试。
+1. **Image** - 图片组件
+   - 支持图片预览功能
+   - 自动错误处理
+   - 支持自定义渲染
 
-## 如何添加新包
+2. **Layout** - 布局组件
+   - 6 种布局模式（B、HB、HAB、HBF、AB、BF）
+   - 侧边栏可折叠
+   - 响应式设计
 
-1. 在 `packages` 目录下创建新文件夹（例如 `my-new-pkg`）。
-2. 运行 `pnpm init` 初始化 `package.json`，并将名称设置为 `@react-repo/my-new-pkg`。
-3. 参考 `packages/components` 配置 `tsconfig.json` 和 `tsup` 构建脚本。
-4. 在根目录运行 `pnpm install` 刷新依赖。
-
-## 封装规范
-
-- **继承性**：所有封装组件必须继承 antd 原生属性。
-- **自定义主题**：支持通过 `ConfigProvider` 或组件 props 注入自定义主题。
-- **Design Token**：优先使用 antd 的 `theme.useToken()` 获取 Design Token，确保风格统一。
+3. **SearchForm** - 搜索表单组件
+   - 支持多种表单控件类型
+   - 自动响应式布局
+   - 配置式和插槽式两种使用方式

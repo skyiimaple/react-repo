@@ -1,0 +1,430 @@
+import { SearchForm, SearchFormField } from '@shrimp-design-react/components';
+import { useState } from 'react';
+
+# SearchForm 搜索表单组件
+
+一个功能强大的搜索表单组件，支持多种表单控件类型，自动响应式布局，简化搜索表单的开发。
+
+## 功能特性
+
+- ✅ 支持多种表单控件类型（input、select、date、radio、checkbox 等）
+- ✅ 自动响应式布局
+- ✅ 支持配置式和插槽式两种使用方式
+- ✅ 完整的 TypeScript 类型支持
+- ✅ 基于 Arco Design 组件库
+
+## 支持的控件类型
+
+- `input` - 输入框
+- `input-number` - 数字输入框
+- `input-tag` - 标签输入框
+- `select` - 下拉选择
+- `date` - 日期选择
+- `date-range` - 日期范围选择
+- `radio` - 单选框
+- `checkbox` - 复选框
+- `switch` - 开关
+- `tree-select` - 树形选择
+- `custom` - 自定义控件
+
+## 基础用法
+
+### 配置式用法
+
+```tsx
+import { SearchForm } from '@shrimp-design-react/components'
+
+<SearchForm
+  fields={{
+    name: {
+      type: 'input',
+      label: '姓名',
+      placeholder: '请输入姓名'
+    },
+    status: {
+      type: 'select',
+      label: '状态',
+      options: [
+        { label: '启用', value: 1 },
+        { label: '禁用', value: 0 }
+      ]
+    }
+  }}
+  onSearch={(values) => {
+    console.log('搜索', values)
+  }}
+/>
+```
+
+**实际效果：**
+
+<div style={{ margin: '16px 0', padding: '16px', background: '#fafafa', borderRadius: '4px' }}>
+  <SearchForm
+    fields={{
+      name: {
+        type: 'input',
+        label: '姓名',
+        placeholder: '请输入姓名'
+      },
+      status: {
+        type: 'select',
+        label: '状态',
+        placeholder: '请选择状态',
+        options: [
+          { label: '启用', value: 1 },
+          { label: '禁用', value: 0 }
+        ]
+      }
+    }}
+    onSearch={(values) => {
+      console.log('搜索', values)
+      alert('搜索参数: ' + JSON.stringify(values))
+    }}
+  />
+</div>
+
+### 插槽式用法
+
+```tsx
+import { SearchForm, SearchFormField } from '@shrimp-design-react/components'
+
+<SearchForm onSearch={(values) => console.log(values)}>
+  <SearchFormField
+    name="name"
+    type="input"
+    label="姓名"
+    placeholder="请输入姓名"
+  />
+  <SearchFormField
+    name="status"
+    type="select"
+    label="状态"
+    options={[
+      { label: '启用', value: 1 },
+      { label: '禁用', value: 0 }
+    ]}
+  />
+</SearchForm>
+```
+
+**实际效果：**
+
+<div style={{ margin: '16px 0', padding: '16px', background: '#fafafa', borderRadius: '4px' }}>
+  <SearchForm onSearch={(values) => {
+    console.log('搜索', values)
+    alert('搜索参数: ' + JSON.stringify(values))
+  }}>
+    <SearchFormField
+      name="name"
+      type="input"
+      label="姓名"
+      placeholder="请输入姓名"
+    />
+    <SearchFormField
+      name="status"
+      type="select"
+      label="状态"
+      placeholder="请选择状态"
+      options={[
+        { label: '启用', value: 1 },
+        { label: '禁用', value: 0 }
+      ]}
+    />
+  </SearchForm>
+</div>
+
+## API
+
+### SearchFormProps
+
+| 参数 | 说明 | 类型 | 默认值 |
+|------|------|------|--------|
+| modelValue | 表单数据 | `Record<string, any>` | - |
+| fields | 字段配置（配置式） | `SearchFormFields` | - |
+| fieldSpanMap | 栅格化列设置 | `{ xs: number; sm: number; md: number; xl: number }` | `{ xs: 12, sm: 12, md: 8, xl: 6 }` |
+| screenMediaMap | 屏幕响应阈值 | `{ xs: number; sm: number; md: number; xl: number }` | `{ xs: 980, sm: 1180, md: 1380, xl: 1580 }` |
+| formProps | 传给 Form 的 props | `Record<string, any>` | - |
+| onSearch | 搜索回调 | `(value: Record<string, any>, formatValue: Record<string, any>) => void` | - |
+| onReset | 重置回调 | `() => void` | - |
+| onChange | 值改变回调 | `(value: any) => void` | - |
+| children | 子元素（插槽式） | `ReactNode` | - |
+
+### SearchFormField
+
+| 参数 | 说明 | 类型 | 默认值 |
+|------|------|------|--------|
+| name | 控件名称 | `string` | - |
+| type | 控件类型 | `'input' \| 'input-number' \| 'select' \| 'date' \| 'date-range' \| 'radio' \| 'checkbox' \| 'switch' \| 'tree-select' \| 'custom'` | - |
+| label | 标签 | `string` | - |
+| placeholder | 占位符 | `string` | - |
+| value | 字段值 | `any` | - |
+| options | 字段选项（用于 select、radio、checkbox 等） | `any[]` | `[]` |
+| fieldProps | 字段属性 | `Record<string, any>` | - |
+| labelCol | label 标签布局 | `Record<string, any>` | `{ span: 6 }` |
+| wrapperCol | 控件布局 | `Record<string, any>` | `{ span: 18 }` |
+| labelSlot | 标签插槽 | `(label: string, props?: Record<string, any>) => ReactNode` | - |
+| defaultSlot | 控件插槽 | `(value: any, props?: Record<string, any>, onChange?: (value: any) => void) => ReactNode` | - |
+| onChange | 值改变回调 | `(value: any) => void` | - |
+
+## 使用示例
+
+### 多种控件类型
+
+```tsx
+import { SearchForm } from '@shrimp-design-react/components'
+
+<SearchForm
+  fields={{
+    name: {
+      type: 'input',
+      label: '姓名',
+      placeholder: '请输入姓名'
+    },
+    age: {
+      type: 'input-number',
+      label: '年龄',
+      placeholder: '请输入年龄'
+    },
+    status: {
+      type: 'select',
+      label: '状态',
+      placeholder: '请选择状态',
+      options: [
+        { label: '启用', value: 1 },
+        { label: '禁用', value: 0 }
+      ]
+    },
+    date: {
+      type: 'date',
+      label: '日期',
+      placeholder: '请选择日期'
+    }
+  }}
+  onSearch={(values) => console.log(values)}
+/>
+```
+
+**实际效果：**
+
+<div style={{ margin: '16px 0', padding: '16px', background: '#fafafa', borderRadius: '4px' }}>
+  <SearchForm
+    fields={{
+      name: {
+        type: 'input',
+        label: '姓名',
+        placeholder: '请输入姓名'
+      },
+      age: {
+        type: 'input-number',
+        label: '年龄',
+        placeholder: '请输入年龄'
+      },
+      status: {
+        type: 'select',
+        label: '状态',
+        placeholder: '请选择状态',
+        options: [
+          { label: '启用', value: 1 },
+          { label: '禁用', value: 0 }
+        ]
+      },
+      date: {
+        type: 'date',
+        label: '日期',
+        placeholder: '请选择日期'
+      }
+    }}
+    onSearch={(values) => {
+      console.log('搜索参数:', values)
+      alert('搜索参数: ' + JSON.stringify(values))
+    }}
+  />
+</div>
+
+### 单选框和复选框
+
+```tsx
+import { SearchForm } from '@shrimp-design-react/components'
+
+<SearchForm
+  fields={{
+    gender: {
+      type: 'radio',
+      label: '性别',
+      options: [
+        { label: '男', value: 'male' },
+        { label: '女', value: 'female' }
+      ]
+    },
+    hobbies: {
+      type: 'checkbox',
+      label: '爱好',
+      options: [
+        { label: '阅读', value: 'reading' },
+        { label: '运动', value: 'sports' },
+        { label: '音乐', value: 'music' }
+      ]
+    }
+  }}
+  onSearch={(values) => console.log(values)}
+/>
+```
+
+**实际效果：**
+
+<div style={{ margin: '16px 0', padding: '16px', background: '#fafafa', borderRadius: '4px' }}>
+  <SearchForm
+    fields={{
+      gender: {
+        type: 'radio',
+        label: '性别',
+        options: [
+          { label: '男', value: 'male' },
+          { label: '女', value: 'female' }
+        ]
+      },
+      hobbies: {
+        type: 'checkbox',
+        label: '爱好',
+        options: [
+          { label: '阅读', value: 'reading' },
+          { label: '运动', value: 'sports' },
+          { label: '音乐', value: 'music' }
+        ]
+      }
+    }}
+    onSearch={(values) => {
+      console.log('搜索参数:', values)
+      alert('搜索参数: ' + JSON.stringify(values))
+    }}
+  />
+</div>
+
+### 开关控件
+
+```tsx
+import { SearchForm } from '@shrimp-design-react/components'
+
+<SearchForm
+  fields={{
+    enabled: {
+      type: 'switch',
+      label: '是否启用'
+    }
+  }}
+  onSearch={(values) => console.log(values)}
+/>
+```
+
+**实际效果：**
+
+<div style={{ margin: '16px 0', padding: '16px', background: '#fafafa', borderRadius: '4px' }}>
+  <SearchForm
+    fields={{
+      enabled: {
+        type: 'switch',
+        label: '是否启用'
+      }
+    }}
+    onSearch={(values) => {
+      console.log('搜索参数:', values)
+      alert('搜索参数: ' + JSON.stringify(values))
+    }}
+  />
+</div>
+
+### 受控表单
+
+```tsx
+import { SearchForm } from '@shrimp-design-react/components'
+import { useState } from 'react'
+
+function App() {
+  const [formData, setFormData] = useState({
+    name: '',
+    status: undefined
+  })
+
+  return (
+    <SearchForm
+      modelValue={formData}
+      fields={{
+        name: {
+          type: 'input',
+          label: '姓名'
+        },
+        status: {
+          type: 'select',
+          label: '状态',
+          options: [
+            { label: '启用', value: 1 },
+            { label: '禁用', value: 0 }
+          ]
+        }
+      }}
+      onChange={(values) => setFormData(values)}
+      onSearch={(values) => console.log('搜索', values)}
+    />
+  )
+}
+```
+
+**实际效果：**
+
+<div style={{ margin: '16px 0', padding: '16px', background: '#fafafa', borderRadius: '4px' }}>
+  <ControlledSearchFormExample />
+</div>
+
+## 注意事项
+
+1. 组件基于 Arco Design，需要确保已安装 `@arco-design/web-react`
+2. 配置式和插槽式可以混合使用
+3. 响应式布局会根据窗口大小自动调整每行显示的字段数量
+4. `fieldSpanMap` 和 `screenMediaMap` 可以自定义响应式断点和列数
+5. 自定义控件需要使用 `type="custom"` 并通过 `children` 函数渲染
+
+{/* 示例组件 */}
+function ControlledSearchFormExample() {
+  const [formData, setFormData] = useState({
+    name: '',
+    status: undefined
+  })
+
+  return (
+    <div>
+      <SearchForm
+        modelValue={formData}
+        fields={{
+          name: {
+            type: 'input',
+            label: '姓名',
+            placeholder: '请输入姓名'
+          },
+          status: {
+            type: 'select',
+            label: '状态',
+            placeholder: '请选择状态',
+            options: [
+              { label: '启用', value: 1 },
+              { label: '禁用', value: 0 }
+            ]
+          }
+        }}
+        onChange={(values) => {
+          setFormData(values)
+          console.log('表单值变化:', values)
+        }}
+        onSearch={(values) => {
+          console.log('搜索', values)
+          alert('搜索参数: ' + JSON.stringify(values))
+        }}
+      />
+      <div style={{ marginTop: '16px', padding: '8px', background: '#fff', borderRadius: '4px', fontSize: '12px' }}>
+        <strong>当前表单值：</strong>
+        <pre style={{ margin: '8px 0 0 0', fontSize: '12px' }}>
+          {JSON.stringify(formData, null, 2)}
+        </pre>
+      </div>
+    </div>
+  )
+}

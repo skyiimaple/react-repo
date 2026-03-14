@@ -1,0 +1,11 @@
+.sp-img {
+  display: inline-block;
+
+  &.preview {
+    cursor: pointer;
+  }
+
+  img {
+    width: 100%;
+  }
+}

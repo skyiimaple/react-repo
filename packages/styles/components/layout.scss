@@ -1,0 +1,128 @@
+.sp-layout-container {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: auto;
+  background-color: #fff;
+  min-height: 100%;
+  width: 100%;
+
+  &.full-height {
+    height: 100%;
+  }
+
+  .sp-layout-header {
+    width: 100%;
+    flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    min-height: 48px;
+    border-bottom: 1px solid #e8e8e8;
+  }
+
+  .sp-layout-aside {
+    position: relative;
+    height: inherit;
+    min-height: 1px;
+    overflow: hidden;
+    transition: width 0.3s ease;
+
+    .sp-layout-aside_wrapper {
+      height: 100%;
+      overflow: auto;
+      overflow-x: hidden;
+      border-right: 1px solid #e8e8e8;
+
+      .sp-layout-aside_wrapper_content {
+        height: 100%;
+      }
+    }
+
+    .sp-layout-aside_wrapper_collapse {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      z-index: 1;
+      right: -1px;
+      top: 50%;
+      width: 16px;
+      height: 32px;
+      background-color: #fff;
+      border-top-left-radius: 16px;
+      border-bottom-left-radius: 16px;
+      border: 1px solid #e8e8e8;
+      border-right: none;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      font-size: 12px;
+      color: #999;
+      box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+      transform: translateY(-50%);
+
+      &:hover {
+        color: #1890ff;
+        background-color: #f0f2f5;
+      }
+    }
+
+    &.collapsed {
+      overflow: visible;
+      border-right: 0;
+
+      .sp-layout-aside_wrapper {
+        border-right: none;
+      }
+
+      .sp-layout-aside_wrapper_collapse {
+        width: 24px;
+        height: 24px;
+        right: -12px;
+        border-radius: 16px;
+        border-right: 1px solid #e8e8e8;
+      }
+    }
+  }
+
+  .sp-layout-main {
+    overflow: auto;
+  }
+
+  .sp-layout-footer {
+    display: block;
+    border-top: 1px solid #e8e8e8;
+  }
+
+  // hb
+  &.mode-hb {
+    grid-template-columns: 100%;
+    grid-template-rows: min-content auto;
+  }
+
+  // hab
+  &.mode-hab {
+    grid-template-columns: min-content auto;
+    grid-template-rows: min-content auto;
+  }
+
+  &.mode-hab .sp-layout-header {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+
+  // hbf
+  &.mode-hbf {
+    grid-template-rows: min-content auto min-content;
+  }
+
+  // bf
+  &.mode-bf {
+    grid-template-rows: auto min-content;
+  }
+
+  // ab
+  &.mode-ab {
+    grid-template-rows: auto;
+    grid-template-columns: min-content auto;
+  }
+}

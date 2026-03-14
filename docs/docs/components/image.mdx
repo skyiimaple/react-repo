@@ -1,0 +1,185 @@
+import { Image } from '@shrimp-design-react/components';
+import { useState } from 'react';
+
+# Image 图片组件
+
+一个增强的图片组件，支持图片预览、错误处理和自定义渲染。
+
+## 功能特性
+
+- ✅ 支持图片预览功能（基于 viewerjs）
+- ✅ 自动错误处理，支持自定义错误图片
+- ✅ 支持自定义渲染
+- ✅ 完整的 TypeScript 类型支持
+
+## 基础用法
+
+### 基础图片展示
+
+```tsx
+import { Image } from '@shrimp-design-react/components'
+
+<Image 
+  src="https://via.placeholder.com/300x200" 
+  alt="示例图片"
+/>
+```
+
+**实际效果：**
+
+<div style={{ margin: '16px 0' }}>
+  <Image 
+    src="https://via.placeholder.com/300x200" 
+    alt="示例图片"
+  />
+</div>
+
+### 开启预览功能
+
+```tsx
+import { Image } from '@shrimp-design-react/components'
+
+<Image 
+  src="https://via.placeholder.com/600x400" 
+  alt="可预览的图片"
+  preview 
+/>
+```
+
+**实际效果（点击图片可预览）：**
+
+<div style={{ margin: '16px 0' }}>
+  <Image 
+    src="https://via.placeholder.com/600x400" 
+    alt="可预览的图片"
+    preview 
+  />
+</div>
+
+## API
+
+### ImageProps
+
+| 参数 | 说明 | 类型 | 默认值 |
+|------|------|------|--------|
+| preview | 是否开启预览 | `boolean` | `false` |
+| src | 图片地址 | `string` | `''` |
+| errorSrc | 加载错误时的图片地址 | `string` | 默认错误图片 |
+| alt | 图片描述 | `string` | - |
+| imgProps | 传给 img 的属性 | `Record<string, any>` | - |
+| children | 自定义渲染函数 | `(props: { show: () => void; viewer: Viewer \| null; error: (e: React.SyntheticEvent<HTMLImageElement, Event>) => void }) => ReactNode` | - |
+| onError | 错误回调 | `(e: React.SyntheticEvent<HTMLImageElement, Event>) => void` | - |
+
+## 使用示例
+
+### 自定义错误图片
+
+```tsx
+import { Image } from '@shrimp-design-react/components'
+
+<Image 
+  src="https://invalid-url.com/image.jpg" 
+  alt="错误示例"
+  errorSrc="https://via.placeholder.com/300x200?text=Error"
+  onError={(e) => {
+    console.log('图片加载失败', e)
+  }}
+/>
+```
+
+**实际效果：**
+
+<div style={{ margin: '16px 0' }}>
+  <Image 
+    src="https://invalid-url.com/image.jpg" 
+    alt="错误示例"
+    errorSrc="https://via.placeholder.com/300x200?text=Error"
+    onError={(e) => {
+      console.log('图片加载失败', e)
+    }}
+  />
+</div>
+
+### 传递额外的 img 属性
+
+```tsx
+import { Image } from '@shrimp-design-react/components'
+
+<Image 
+  src="https://via.placeholder.com/200x200" 
+  alt="示例图片"
+  imgProps={{
+    width: 200,
+    height: 200,
+    style: { borderRadius: '8px', border: '2px solid #1890ff' },
+    loading: 'lazy'
+  }}
+/>
+```
+
+**实际效果：**
+
+<div style={{ margin: '16px 0' }}>
+  <Image 
+    src="https://via.placeholder.com/200x200" 
+    alt="示例图片"
+    imgProps={{
+      width: 200,
+      height: 200,
+      style: { borderRadius: '8px', border: '2px solid #1890ff' },
+      loading: 'lazy'
+    }}
+  />
+</div>
+
+### 自定义渲染
+
+```tsx
+import { Image } from '@shrimp-design-react/components'
+
+<Image 
+  src="https://via.placeholder.com/400x300"
+  preview
+>
+  {({ show, viewer, error }) => (
+    <div style={{ textAlign: 'center' }}>
+      <img 
+        src="https://via.placeholder.com/400x300" 
+        alt="示例图片"
+        onError={error}
+        onClick={show}
+        style={{ cursor: 'pointer', borderRadius: '8px', maxWidth: '100%' }}
+      />
+      <p style={{ marginTop: '8px', color: '#666' }}>点击图片预览</p>
+    </div>
+  )}
+</Image>
+```
+
+**实际效果：**
+
+<div style={{ margin: '16px 0' }}>
+  <Image 
+    src="https://via.placeholder.com/400x300"
+    preview
+  >
+    {({ show, viewer, error }) => (
+      <div style={{ textAlign: 'center' }}>
+        <img 
+          src="https://via.placeholder.com/400x300" 
+          alt="示例图片"
+          onError={error}
+          onClick={show}
+          style={{ cursor: 'pointer', borderRadius: '8px', maxWidth: '100%' }}
+        />
+        <p style={{ marginTop: '8px', color: '#666' }}>点击图片预览</p>
+      </div>
+    )}
+  </Image>
+</div>
+
+## 注意事项
+
+1. 开启 `preview` 功能需要安装 `viewerjs` 依赖
+2. 自定义渲染时，需要手动调用 `show()` 方法来触发预览
+3. 错误处理会自动替换为 `errorSrc` 指定的图片

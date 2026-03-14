@@ -1,0 +1,21 @@
+[
+  {
+    "text": "Guide",
+    "link": "/guide/",
+    "activeMatch": "/guide/"
+  },
+  {
+    "text": "Components",
+    "link": "/components/image",
+    "activeMatch": "/components/"
+  },
+  {
+    "text": "Hello world",
+    "link": "/hello/",
+    "activeMatch": "/hello/"
+  },
+  {
+    "text": "API",
+    "link": "https://rspress.rs/api/index.html"
+  }
+]
